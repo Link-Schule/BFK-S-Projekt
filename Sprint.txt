@@ -1,0 +1,4 @@
+1. Excel Tabelle einlesen Code (stefan, Philipp Link)
+2. Max min und Durchschnittswerte ermitteln (Julia. Philip )
+
+
