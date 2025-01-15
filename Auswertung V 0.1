@@ -1,0 +1,112 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string filePath = @"C:\Users\Stefan Kallenberg\Desktop\Sprint\BFK-S-Projekt\MaxTemp\MaxTemp\temps.csv";
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("Datei nicht gefunden: " + filePath);
+            return;
+        }
+
+        // Liste für die Sensordaten
+        var sensorData = new List<(string Sensor, DateTime Zeit, double Temperatur)>();
+
+        // CSV-Datei einlesen und in strukturierte Daten umwandeln
+        foreach (var line in File.ReadLines(filePath))
+        {
+            var parts = line.Split(',');
+            if (parts.Length == 3)
+            {
+                try
+                {
+                    string sensor = parts[0];
+                    DateTime zeit = DateTime.ParseExact(parts[1], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                    double temperatur = double.Parse(parts[2], CultureInfo.InvariantCulture);
+
+                    sensorData.Add((sensor, zeit, temperatur));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Fehler beim Verarbeiten der Zeile: {line}");
+                    Console.WriteLine($"Details: {ex.Message}");
+                }
+            }
+        }
+
+        // Verfügbare Sensoren anzeigen
+        var sensorNames = sensorData.Select(d => d.Sensor).Distinct().OrderBy(s => s).ToList();
+        Console.WriteLine("Verfügbare Sensoren:");
+        Console.WriteLine("- Alle");
+        foreach (var sensor in sensorNames)
+        {
+            Console.WriteLine($"- {sensor}");
+        }
+
+        // Benutzerabfrage
+        Console.Write("Bitte geben Sie den gewünschten Sensor ein (oder 'Alle', um alle anzuzeigen): ");
+        string selectedSensor = Console.ReadLine();
+
+        if (selectedSensor.Equals("Alle", StringComparison.OrdinalIgnoreCase))
+        {
+            // Alle Sensoren auswerten
+            Console.WriteLine("\nAuswertung aller Sensoren:");
+
+            foreach (var sensor in sensorNames)
+            {
+                var filteredData = sensorData
+                    .Where(d => d.Sensor.Equals(sensor, StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(d => d.Zeit)
+                    .ToList();
+
+                if (filteredData.Count > 0)
+                {
+                    var maxTemp = filteredData.Max(d => d.Temperatur);
+                    var minTemp = filteredData.Min(d => d.Temperatur);
+                    var avgTemp = filteredData.Average(d => d.Temperatur);
+
+                    Console.WriteLine($"\nSensor: {sensor}");
+                    Console.WriteLine($"- Maximale Temperatur: {maxTemp} °C");
+                    Console.WriteLine($"- Minimale Temperatur: {minTemp} °C");
+                    Console.WriteLine($"- Durchschnittstemperatur: {avgTemp:F2} °C");
+                }
+            }
+        }
+        else
+        {
+            // Einzelnen Sensor auswerten
+            var filteredData = sensorData
+                .Where(d => d.Sensor.Equals(selectedSensor, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(d => d.Zeit)
+                .ToList();
+
+            if (filteredData.Count == 0)
+            {
+                Console.WriteLine($"Keine Daten für den Sensor '{selectedSensor}' gefunden.");
+                return;
+            }
+
+            Console.WriteLine($"\nAuswertung für Sensor '{selectedSensor}':");
+            foreach (var entry in filteredData)
+            {
+                Console.WriteLine($"Zeit: {entry.Zeit}, Temperatur: {entry.Temperatur} °C");
+            }
+
+            var maxTemp = filteredData.Max(d => d.Temperatur);
+            var minTemp = filteredData.Min(d => d.Temperatur);
+            var avgTemp = filteredData.Average(d => d.Temperatur);
+
+            Console.WriteLine($"\nZusammenfassung für Sensor '{selectedSensor}':");
+            Console.WriteLine($"- Maximale Temperatur: {maxTemp} °C");
+            Console.WriteLine($"- Minimale Temperatur: {minTemp} °C");
+            Console.WriteLine($"- Durchschnittstemperatur: {avgTemp:F2} °C");
+        }
+    }
+}
