@@ -1,5 +1,5 @@
-1. Excel Tabelle einlesen Code (Stefan, Philipp Link)
-2. Max min und Durchschnittswerte ermitteln (Julia. Philip )
+1. Excel Tabelle einlesen Code (Stefan Kallenberg, Philipp Link)
+2. Max min und Durchschnittswerte ermitteln (Julia Stierle, Philip Meyer)
 
 Sprint Plan
 https://miro.com/welcome/K2gyOWsvS2dOUVlKNnNXT21rWjlaS1ZIREJ1UDBEU202Q1hKY0VDSW5hcS9MdDZYbEJZMjdnTUpUVTU4ZjhBNHNaQ3diNEw5NkVXOTBjQ01uU2tESkV6OHAvZE9xNlJVc0h2cTZOQ0RZWTBXMUZreDNjcWp2ZVlRcEhDYng4SDkhZQ==?share_link_id=475938417165
