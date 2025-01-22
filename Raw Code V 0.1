@@ -8,16 +8,27 @@ using System.Threading.Tasks;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-        // Lokaler Pfad, Anpassen um die CSV Datei auslesen lassen zu können!!!
-        string filePath = @"C:\Users\Stefan Kallenberg\Desktop\Sprint\BFK-S-Projekt\MaxTemp\MaxTemp\temps.csv";
+        // URL der CSV-Datei auf GitHub
+        string fileUrl = "https://raw.githubusercontent.com/Link-Schule/BFK-S-Projekt/main/temps.csv";
 
-        if (!File.Exists(filePath))
+        string csvContent;
+
+        // CSV-Datei von der URL herunterladen
+        try
         {
-            Console.WriteLine("Datei nicht gefunden: " + filePath);
+            using (HttpClient client = new HttpClient())
+            {
+                csvContent = await client.GetStringAsync(fileUrl);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Fehler beim Herunterladen der Datei: " + ex.Message);
             return;
         }
+
 
         // Liste für die Sensordaten
         var sensorData = new List<(string Sensor, DateTime Zeit, double Temperatur)>();
