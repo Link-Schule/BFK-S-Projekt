@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -29,12 +28,11 @@ class Program
             return;
         }
 
-
         // Liste für die Sensordaten
         var sensorData = new List<(string Sensor, DateTime Zeit, double Temperatur)>();
 
-        // CSV-Datei einlesen und in strukturierte Daten umwandeln
-        foreach (var line in File.ReadLines(filePath))
+        // CSV-Inhalt in strukturierte Daten umwandeln
+        foreach (var line in csvContent.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
         {
             var parts = line.Split(',');
             if (parts.Length == 3)
