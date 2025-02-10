@@ -9,16 +9,20 @@
     <Viewbox>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Name="lblAufforderung">Bitte klicken, um Temperaturen auszuwerten.</Label>
-            <Button Grid.Row="1" Name="btnAuswerten" Click="BtnAuswerten_Click">Auswerten</Button>
-            <Label Grid.Row="2" Name="lblAusgabe">---88,5 Grad ist die höchste Temperatur (Dummy)---</Label>
-        </Grid>
-    </Viewbox>
+				<ColumnDefinition Width="200"/>
+				<ColumnDefinition Width="200"/>
+				<ColumnDefinition Width="200"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="1*" />
+				<RowDefinition Height="1*" />
+			</Grid.RowDefinitions>
+			<Label Grid.Row="0" Grid.Column="1" Name="sensorAufforderung">Geben sie den Sensor ein:</Label>
+			<TextBox x:Name="sensor" Grid.Row="1" Grid.Column="1"  Width="200px" />
+			<Button Grid.Row="2" Grid.Column="0" Name="maxTmp" Click="BtnAuswerten_Click">Maximale Temperatur</Button>
+			<Button Grid.Row="2"  Grid.Column="1" Name="minTmp" Click="BtnAuswerten_Click">Minimale Temperatur</Button>
+			<Button Grid.Row="2"  Grid.Column="2" Name="avrTmp" Click="BtnAuswerten_Click">Durschnitts Temperatur</Button>
+		</Grid>
+	</Viewbox>
 </Window>
